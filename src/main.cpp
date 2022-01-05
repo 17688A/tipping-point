@@ -1,38 +1,3 @@
-// ---- START VEXCODE CONFIGURED DEVICES ----
-// Robot Configuration:
-// [Name]               [Type]        [Port(s)]
-// Controller1          controller                    
-// Drivetrain           drivetrain    1, 2            
-// Pneumatic            digital_out   A               
-// PneumaticBack        digital_out   B               
-// RedLED               digital_out   H               
-// YellowLED            digital_out   G               
-// GreenLED             digital_out   F               
-// Vision               vision        3               
-// ---- END VEXCODE CONFIGURED DEVICES ----
-// ---- START VEXCODE CONFIGURED DEVICES ----
-// Robot Configuration:
-// [Name]               [Type]        [Port(s)]
-// Controller1          controller                    
-// Drivetrain           drivetrain    1, 2            
-// Pneumatic            digital_out   A               
-// PneumaticBack        digital_out   B               
-// RedLED               digital_out   H               
-// YellowLED            digital_out   G               
-// GreenLED             digital_out   F               
-// ---- END VEXCODE CONFIGURED DEVICES ----
-// ---- START VEXCODE CONFIGURED DEVICES ----
-// Robot Configuration:
-// [Name]               [Type]        [Port(s)]
-// Controller1          controller                    
-// Drivetrain           drivetrain    1, 2            
-// Pneumatic            digital_out   A               
-// PneumaticBack        digital_out   B               
-// RedLED               digital_out   H               
-// YellowLED            digital_out   G               
-// GreenLED             digital_out   F               
-// Vision               optical       3               
-// ---- END VEXCODE CONFIGURED DEVICES ----
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
 /*    Module:       main.cpp                                                  */
@@ -61,6 +26,7 @@
 // RedLED               digital_out   H               
 // YellowLED            digital_out   G               
 // GreenLED             digital_out   F               
+// Vision               optical       3               
 // ---- END VEXCODE CONFIGURED DEVICES ----
   #include "vex.h"
   using namespace vex;
@@ -111,12 +77,13 @@ void autonomous(void) {
   vex::task Battery(BatteryPercent);
   Drivetrain.driveFor(forward, 25, inches); 
   Drivetrain.turnFor(right, 55, degrees); 
-  Vision.objects[0].exists; 
+  bool Wait;
+  for (bool) {
+    while (Wait){
+      if (Vision.objects[0].exists){
 
-
-
-
-
+      }
+    }
   }
 // Start of usercontrol code
   // Start of CustumController code

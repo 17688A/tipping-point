@@ -27,11 +27,9 @@
 // YellowLED            digital_out   G               
 // GreenLED             digital_out   F               
 // ---- END VEXCODE CONFIGURED DEVICES ----
-
-#include "vex.h"
-using namespace vex;
-
-
+  #include "vex.h"
+  using namespace vex;
+// Global variables
   int pneumaticStatus = 0;
   int pneumaticStatusBack = 0;
   int powerStatus = 0;
@@ -39,20 +37,7 @@ using namespace vex;
   int driveDirection = 0;
 
 // A global instance of competition
-competition Competition;
-
-// define your global instances of motors and other devices here
-
-/*---------------------------------------------------------------------------*/
-/*                          Pre-Autonomous Functions                         */
-/*                                                                           */
-/*  You may want to perform some actions before the competition starts.      */
-/*  Do them in the following function.  You must return from this function   */
-/*  or the autonomous and usercontrol tasks will not be started.  This       */
-/*  function is only called once after the V5 has been powered on and        */
-/*  not every time that the robot is disabled.                               */
-/*---------------------------------------------------------------------------*/
-
+  competition Competition;
 void pre_auton(void) {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
@@ -134,25 +119,25 @@ void autonomous(void) {
     // End of usercontrol code
 
 void usercontrol(void) {
-  // User control code here, inside the loop
-  while (true) {
-    Controller1.ButtonX.pressed(PneumaticSwitch);
-    Controller1.ButtonA.pressed(PneumaticSwitchBack);
-    vex::task Battery(BatteryPercent);
-    wait(20, msec); // Sleep the task for a short amount of time to
-                    // prevent wasted resources.
+    // User control code here, inside the loop
+    while (true) {
+      Controller1.ButtonX.pressed(PneumaticSwitch);
+      Controller1.ButtonA.pressed(PneumaticSwitchBack);
+      vex::task Battery(BatteryPercent);
+      wait(20, msec); // Sleep the task for a short amount of time to
+                      // prevent wasted resources.
+    }
   }
-}
 
 int main() {
-  // Set up callbacks for autonomous and driver control periods.
-  Competition.autonomous(autonomous);
-  Competition.drivercontrol(usercontrol);
-  // Run the pre-autonomous function.
-  pre_auton();
+    // Set up callbacks for autonomous and driver control periods.
+    Competition.autonomous(autonomous);
+    Competition.drivercontrol(usercontrol);
+    // Run the pre-autonomous function.
+    pre_auton();
 
-  // Prevent main from exiting with an infinite loop.
-  while (true) {
-    wait(100, msec);
+    // Prevent main from exiting with an infinite loop.
+    while (true) {
+      wait(100, msec);
+    }
   }
-}

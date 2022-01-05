@@ -1,3 +1,38 @@
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// Controller1          controller                    
+// Drivetrain           drivetrain    1, 2            
+// Pneumatic            digital_out   A               
+// PneumaticBack        digital_out   B               
+// RedLED               digital_out   H               
+// YellowLED            digital_out   G               
+// GreenLED             digital_out   F               
+// Vision               vision        3               
+// ---- END VEXCODE CONFIGURED DEVICES ----
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// Controller1          controller                    
+// Drivetrain           drivetrain    1, 2            
+// Pneumatic            digital_out   A               
+// PneumaticBack        digital_out   B               
+// RedLED               digital_out   H               
+// YellowLED            digital_out   G               
+// GreenLED             digital_out   F               
+// ---- END VEXCODE CONFIGURED DEVICES ----
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// Controller1          controller                    
+// Drivetrain           drivetrain    1, 2            
+// Pneumatic            digital_out   A               
+// PneumaticBack        digital_out   B               
+// RedLED               digital_out   H               
+// YellowLED            digital_out   G               
+// GreenLED             digital_out   F               
+// Vision               optical       3               
+// ---- END VEXCODE CONFIGURED DEVICES ----
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
 /*    Module:       main.cpp                                                  */
@@ -46,20 +81,23 @@ void pre_auton(void) {
   int BatteryPercent(){
     while(true){
       int currentPercent = Brain.Battery.capacity();
-        if (currentPercent > 51 ) {
-        RedLED.set(true);
-        YellowLED.set(true);
-        RedLED.set(true);
+        if (currentPercent > 51) 
+        {
+          RedLED.set(true);
+          YellowLED.set(true);
+          RedLED.set(true);
         }
-        else if(currentPercent > 25) {
-        RedLED.set(false);
-        YellowLED.set(true);
-        RedLED.set(true);
+        else if(currentPercent > 25) 
+        {
+          RedLED.set(false);
+          YellowLED.set(true);
+          RedLED.set(true);
         }
-        else if(currentPercent > 10){
-        RedLED.set(false);
-        YellowLED.set(false);
-        RedLED.set(true);
+        else if(currentPercent > 10)
+        {
+          RedLED.set(false);
+          YellowLED.set(false);
+          RedLED.set(true);
         }
         vex::task::sleep(20);
     }
@@ -71,6 +109,14 @@ void pre_auton(void) {
 
 void autonomous(void) {
   vex::task Battery(BatteryPercent);
+  Drivetrain.driveFor(forward, 25, inches); 
+  Drivetrain.turnFor(right, 55, degrees); 
+  Vision.objects[0].exists; 
+
+
+
+
+
   }
 // Start of usercontrol code
   // Start of CustumController code

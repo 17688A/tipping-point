@@ -17,6 +17,9 @@ digital_out PneumaticBack = digital_out(Brain.ThreeWirePort.B);
 digital_out RedLED = digital_out(Brain.ThreeWirePort.H);
 digital_out YellowLED = digital_out(Brain.ThreeWirePort.G);
 digital_out GreenLED = digital_out(Brain.ThreeWirePort.F);
+/*vex-vision-config:begin*/
+vision Vision = vision (PORT3, 50);
+/*vex-vision-config:end*/
 
 // VEXcode generated functions
 // define variable for remote controller enable/disable

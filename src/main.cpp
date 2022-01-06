@@ -2,7 +2,7 @@
 /*                                                                            */
 /*    Module:       main.cpp                                                  */
 /*    Author:       Diego Casillas,Carter Blair,Michelle Chen                 */
-/*    Created:      Wed Jan 05 2022                                           */
+/*    Created:      Tue Dec 14 2021                                           */
 /*    Description:  V5 project                                                */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
@@ -34,13 +34,15 @@
   int actPowerStatus = 0;
   int driveDirection = 0;
   bool FinnishTF = true;
-  int AutonFinnishTF1 = false; 
+  int instance = 0;
 
 // A global instance of competition
   competition Competition;
 void pre_auton(void) {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
+  // Pre_auton start
+  instance = 1;
   }
 // Battery Percent LED Code
   int BatteryPercent(){
@@ -81,9 +83,6 @@ void pre_auton(void) {
     }
     return 1;
   }
-
-
-
 void autonomous(void) {
   vex::task Battery(BatteryPercent);
   Drivetrain.driveFor(forward, 36, inches); 
@@ -93,51 +92,64 @@ void autonomous(void) {
   Drivetrain.driveFor(forward, 8, inches); 
   Pneumatic.set(true); 
   vex::task AutonFinnishTF(AutonFinnish);
+  instance = 2;
     }
 // Start of usercontrol code
   // Start of CustumController code
     int CustumController(){
     // MAX (X,Y) = (479,239)
+    Brain.Battery.capacity();
+    Controller1.Screen.clearLine(1);
+    Controller1.Screen.setCursor(1, 1);
+    Controller1.Screen.print("Vex Tipping Point");
+    Controller1.Screen.setCursor(1, 15); 
+    Controller1.Screen.print(Brain.Battery.capacity());
+    Controller1.Screen.print("%");
+    Controller1.Screen.clearLine(2);
+    Controller1.Screen.setCursor(2, 1); 
+    Controller1.Screen.print("nnn");
+    Controller1.Screen.clearLine(1); 
+
       return 1;
     }
     // Functions
     
     void PneumaticSwitch()
-    {
-      switch(pneumaticStatus)
       {
-        case 0:
+        switch(pneumaticStatus)
         {
-          pneumaticStatus = 1;
-          Pneumatic.set(true);
-          break;
-        }
-        case 1:
-        {
-          pneumaticStatus = 0;
-          Pneumatic.set(false);
-          break;
+          case 0:
+          {
+            pneumaticStatus = 1;
+            Pneumatic.set(true);
+            break;
+          }
+          case 1:
+          {
+            pneumaticStatus = 0;
+            Pneumatic.set(false);
+            break;
+          }
         }
       }
-    }
     void PneumaticSwitchBack()
-    {
-      switch(pneumaticStatusBack)
       {
-        case 0:
+        switch(pneumaticStatusBack)
         {
-          pneumaticStatusBack = 1;
-          PneumaticBack.set(true);
-          break;
-        }
-        case 1:
-        {
-          pneumaticStatusBack = 0;
-          PneumaticBack.set(false);
-          break;
+          case 0:
+          {
+            pneumaticStatusBack = 1;
+            PneumaticBack.set(true);
+            break;
+          }
+          case 1:
+          {
+            pneumaticStatusBack = 0;
+            PneumaticBack.set(false);
+            break;
+          }
         }
       }
-    }
     // End of usercontrol code
 
 void usercontrol(void) {
@@ -146,6 +158,7 @@ void usercontrol(void) {
       Controller1.ButtonX.pressed(PneumaticSwitch);
       Controller1.ButtonA.pressed(PneumaticSwitchBack);
       vex::task Battery(BatteryPercent);
+      instance = 3;
       wait(20, msec); // Sleep the task for a short amount of time to
                       // prevent wasted resources.
     }

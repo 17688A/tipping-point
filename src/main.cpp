@@ -1,12 +1,11 @@
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
 /*    Module:       main.cpp                                                  */
-/*    Author:       VEX                                                       */
-/*    Created:      Thu Sep 26 2019                                           */
-/*    Description:  Competition Main Code                                     */
+/*    Author:       Diego Casillas,Carter Blair,Michelle Chen                 */
+/*    Created:      Wed Jan 05 2022                                           */
+/*    Description:  V5 project                                                */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
-
 /*-------------------------------------------------------------------------------------*/
 /*Refrences for Carter                                                                 */
 /*https://api.vexcode.cloud/v5/                                                        */
@@ -15,7 +14,6 @@
 /*                                                                                     */
 /*                                                                                     */
 /*-------------------------------------------------------------------------------------*/
-
 // ---- START VEXCODE CONFIGURED DEVICES ----
 // Robot Configuration:
 // [Name]               [Type]        [Port(s)]
@@ -25,7 +23,7 @@
 // PneumaticBack        digital_out   B               
 // RedLED               digital_out   H               
 // YellowLED            digital_out   G               
-// GreenLED             digital_out   F                            
+// GreenLED             digital_out   F               
 // ---- END VEXCODE CONFIGURED DEVICES ----
   #include "vex.h"
   using namespace vex;
@@ -36,6 +34,7 @@
   int actPowerStatus = 0;
   int driveDirection = 0;
   bool FinnishTF = true;
+  int AutonFinnishTF1 = false; 
 
 // A global instance of competition
   competition Competition;
@@ -72,18 +71,15 @@ void pre_auton(void) {
 // Autonomous Finnish
   int AutonFinnish(){
     while (FinnishTF){
-      Drivetrain.driveFor(forward, 8, inches);
-      Drivetrain.turnFor(right, 90, degrees);  
+      Drivetrain.driveFor(reverse,36, inches);
+      Drivetrain.turnFor(left, 90, degrees);  
       Drivetrain.driveFor(forward, 14, inches); 
-      Drivetrain.turnFor(right, 90, degrees); 
-      Drivetrain.driveFor(forward, 36, inches); 
-
-      PneumaticBack.set(true); 
-
+      Drivetrain.turnFor(left, 90, degrees); 
+      Drivetrain.driveFor(forward, 10, inches); 
+      Drivetrain.turnFor(left , 90, degrees); 
+      vex::task::sleep(25);
     }
-
-
-    return true;
+    return 1;
   }
 
 
@@ -97,7 +93,7 @@ void autonomous(void) {
   Drivetrain.driveFor(forward, 8, inches); 
   Pneumatic.set(true); 
   vex::task AutonFinnishTF(AutonFinnish);
-  }
+    }
 // Start of usercontrol code
   // Start of CustumController code
     int CustumController(){

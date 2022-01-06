@@ -11,7 +11,7 @@
 /*Refrences for Carter                                                                 */
 /*https://api.vexcode.cloud/v5/                                                        */
 /*https://content.vexrobotics.com/docs/21-22/tipping-point/2021-VRC-GameManual-2.3.pdf */
-/*                                                                                     */
+/*https://content.vexrobotics.com/docs/21-22/tipping-point/2021-VRC-AppendixA-2.2.pdf  */ 
 /*                                                                                     */
 /*                                                                                     */
 /*-------------------------------------------------------------------------------------*/
@@ -36,6 +36,7 @@
   int powerStatus = 0;
   int actPowerStatus = 0;
   int driveDirection = 0;
+  bool FinnishTF = true;
 
 // A global instance of competition
   competition Competition;
@@ -69,21 +70,34 @@ void pre_auton(void) {
     }
     return 1;
   }
+// Autonomous Finnish
+  int AutonFinnish(){
+    while (FinnishTF){
+      Drivetrain.driveFor(forward, 8, inches);
+      Drivetrain.turnFor(right, 90, degrees);  
+      Drivetrain.driveFor(forward, 14, inches); 
+      Drivetrain.turnFor(right, 90, degrees); 
+      Drivetrain.driveFor(forward, 36, inches); 
 
+      PneumaticBack.set(true); 
+
+    }
+
+
+    return true;
+  }
 
 
 
 void autonomous(void) {
   vex::task Battery(BatteryPercent);
-  Drivetrain.driveFor(forward, 25, inches); 
-  Drivetrain.turnFor(right, 55, degrees); 
-  bool Wait;
-  for (bool) {
-    while (Wait){
-      if (Vision.objects[0].exists){
-
-      }
-    }
+  Drivetrain.driveFor(forward, 36, inches); 
+  Drivetrain.turnFor(right, 90, degrees); 
+  Drivetrain.driveFor(forward, 14, inches); 
+  Drivetrain.turnFor(right, 90, degrees); 
+  Drivetrain.driveFor(forward, 8, inches); 
+  Pneumatic.set(true); 
+  vex::task AutonFinnishTF(AutonFinnish);
   }
 // Start of usercontrol code
   // Start of CustumController code

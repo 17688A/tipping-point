@@ -25,8 +25,7 @@
 // PneumaticBack        digital_out   B               
 // RedLED               digital_out   H               
 // YellowLED            digital_out   G               
-// GreenLED             digital_out   F               
-// Vision               optical       3               
+// GreenLED             digital_out   F                            
 // ---- END VEXCODE CONFIGURED DEVICES ----
   #include "vex.h"
   using namespace vex;

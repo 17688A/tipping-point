@@ -1,11 +1,10 @@
-/*-------------------------------------------------------------------------------------*/
-/*Refrences for Carter                                                                 */
-/*https://api.vexcode.cloud/v5/                                                        */
-/*https://content.vexrobotics.com/docs/21-22/tipping-point/2021-VRC-GameManual-2.3.pdf */
-/*https://content.vexrobotics.com/docs/21-22/tipping-point/2021-VRC-AppendixA-2.2.pdf  */ 
-/*                                                                                     */
-/*                                                                                     */
-/*-------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------*/
+/*	   							Great Refrences                                         */
+/* https://api.vexcode.cloud/v5/                                                        */
+/* https://content.vexrobotics.com/docs/21-22/tipping-point/2021-VRC-GameManual-2.3.pdf */
+/* https://content.vexrobotics.com/docs/21-22/tipping-point/2021-VRC-AppendixA-2.2.pdf  */ 
+/*                                                                                      */
+/*--------------------------------------------------------------------------------------*/
 
 // Robot Configuration:
 // [Name]               [Type]        [Port(s)]
@@ -18,174 +17,171 @@
 // GreenLED             digital_out   F               
 
 
-  #include "vex.h"
-  using namespace vex;
+#include "vex.h"
+using namespace vex;
 
 
   // Global variables
-  int pneumaticStatus = 0;
-  int pneumaticStatusBack = 0;
-  int powerStatus = 0;
-  int actPowerStatus = 0;
-  int driveDirection = 0;
-  bool FinnishTF = true;
-  int instance = 0;
+int pneumaticStatus = 0;
+int pneumaticStatusBack = 0;
+int powerStatus = 0;
+int actPowerStatus = 0;
+int driveDirection = 0;
+bool FinishTF = true;
+int instance = 0;
 
-  // A global instance of competition
-  competition Competition;
+// A global instance of competition
+competition Competition;
 
-  void pre_auton(void) 
-  {
-    // Initializing Robot Configuration. DO NOT REMOVE!
+void pre_auton(void) 
+{
+	// Initializing Robot Configuration. DO NOT REMOVE!
     vexcodeInit();
     // Pre_auton start
     instance = 1;
-  }
+}
 
   // Battery Percent LED Code
-  int BatteryPercent()
-  {
-    while(true)
+int BatteryPercent()
+{
+	while(true)
     {
-      int currentPercent = Brain.Battery.capacity();
-        if (currentPercent > 51) 
+    	int currentPercent = Brain.Battery.capacity();
+
+    	if(currentPercent > 51) 
         {
-          RedLED.set(true);
-          YellowLED.set(true);
-          RedLED.set(true);
+        	RedLED.set(true);
+          	YellowLED.set(true);
+          	RedLED.set(true);
         }
         else if(currentPercent > 25) 
         {
-          RedLED.set(false);
-          YellowLED.set(true);
-          RedLED.set(true);
+          	RedLED.set(false);
+        	YellowLED.set(true);
+         	RedLED.set(true);
         }
         else if(currentPercent > 10)
         {
-          RedLED.set(false);
-          YellowLED.set(false);
-          RedLED.set(true);
+          	RedLED.set(false);
+          	YellowLED.set(false);
+          	RedLED.set(true);
         }
+
         vex::task::sleep(20);
     }
-    return 1;
-  }
+	return 1;
+}
 
-  // Autonomous Finnish
-int AutonFinnish()
+int AutonFinish()
 {
-  while (FinnishTF)
-  {
-    Drivetrain.driveFor(reverse,36, inches);
-    Drivetrain.turnFor(left, 90, degrees);  
-    Drivetrain.driveFor(forward, 14, inches); 
-    Drivetrain.turnFor(left, 90, degrees); 
-    Drivetrain.driveFor(forward, 10, inches); 
-    Drivetrain.turnFor(left , 90, degrees); 
-    vex::task::sleep(25);
-  }
-  return 1;
+	while(FinishTF)
+	{
+    	Drivetrain.driveFor(reverse,36, inches);
+    	Drivetrain.turnFor(left, 90, degrees);  
+    	Drivetrain.driveFor(forward, 14, inches); 
+    	Drivetrain.turnFor(left, 90, degrees); 
+    	Drivetrain.driveFor(forward, 10, inches); 
+    	Drivetrain.turnFor(left , 90, degrees); 
+    	vex::task::sleep(25);
+	}
+	return 1;
 }
 
 void autonomous(void) 
 {
-  vex::task Battery(BatteryPercent);
-  Drivetrain.driveFor(forward, 36, inches); 
-  Drivetrain.turnFor(right, 90, degrees); 
-  Drivetrain.driveFor(forward, 14, inches); 
-  Drivetrain.turnFor(right, 90, degrees); 
-  Drivetrain.driveFor(forward, 8, inches); 
-  Pneumatic.set(true); 
-  vex::task AutonFinnishTF(AutonFinnish);
-  instance = 2;
+	vex::task Battery(BatteryPercent);
+  	Drivetrain.driveFor(forward, 36, inches); 
+  	Drivetrain.turnFor(right, 90, degrees); 
+  	Drivetrain.driveFor(forward, 14, inches); 
+  	Drivetrain.turnFor(right, 90, degrees); 
+  	Drivetrain.driveFor(forward, 8, inches); 
+  	Pneumatic.set(true); 
+  	vex::task AutonFinishTF(AutonFinish);
+  	instance = 2;
 }
 
-  // Start of usercontrol code
-  // Start of CustumController code
-int CustumController()
+int CustomController()
 {
-  // MAX (X,Y) = (479,239)
-  Brain.Battery.capacity();
-  Controller1.Screen.clearLine(1);
-  Controller1.Screen.setCursor(1, 1);
-  Controller1.Screen.print("Vex Tipping Point");
-  Controller1.Screen.setCursor(1, 15); 
-  Controller1.Screen.print(Brain.Battery.capacity());
-  Controller1.Screen.print("%");
-  Controller1.Screen.clearLine(2);
-  Controller1.Screen.setCursor(2, 1); 
-  Controller1.Screen.print("nnn");
-  Controller1.Screen.clearLine(1); 
-  return 1;
+	// MAX (X,Y) = (479,239)
+  	Brain.Battery.capacity();
+  	Controller1.Screen.clearLine(1);
+  	Controller1.Screen.setCursor(1, 1);
+  	Controller1.Screen.print("Vex Tipping Point");
+  	Controller1.Screen.setCursor(1, 15); 
+  	Controller1.Screen.print(Brain.Battery.capacity());
+  	Controller1.Screen.print("%");
+  	Controller1.Screen.clearLine(2);
+  	Controller1.Screen.setCursor(2, 1); 
+  	Controller1.Screen.print("nnn");
+  	Controller1.Screen.clearLine(1); 
+  	return 1;
 }
-
-    // Functions
     
-    void PneumaticSwitch()
-      {
-        switch(pneumaticStatus)
+void PneumaticSwitch()
+{
+    switch(pneumaticStatus)
+    {
+    	case 0:
         {
-          case 0:
-          {
-            pneumaticStatus = 1;
+        	pneumaticStatus = 1;
             Pneumatic.set(true);
             break;
-          }
-          case 1:
-          {
-            pneumaticStatus = 0;
+        }
+        case 1:
+        {
+        	pneumaticStatus = 0;
             Pneumatic.set(false);
             break;
-          }
         }
-      }
+    }
+}
 
-    void PneumaticSwitchBack()
-      {
-        switch(pneumaticStatusBack)
+void PneumaticSwitchBack()
+{
+    switch(pneumaticStatusBack)
+    {
+    	case 0:
         {
-          case 0:
-          {
-            pneumaticStatusBack = 1;
-            PneumaticBack.set(true);
-            break;
-          }
-          case 1:
-          {
+        	pneumaticStatusBack = 1;
+        	PneumaticBack.set(true);
+        	break;
+        }
+        case 1:
+        {
             pneumaticStatusBack = 0;
             PneumaticBack.set(false);
             break;
-          }
         }
-      }
+    }
+}
 
     // End of usercontrol code
 
 void usercontrol(void) 
 {
-    // User control code here, inside the loop
-    while (true) 
-    {
-      Controller1.ButtonX.pressed(PneumaticSwitch);
-      Controller1.ButtonA.pressed(PneumaticSwitchBack);
-      vex::task Battery(BatteryPercent);
-      instance = 3;
-      wait(20, msec); // Sleep the task for a short amount of time to
-                      // prevent wasted resources.
-  }
+	// User control code here, inside the loop
+	while(true) 
+	{
+    	Controller1.ButtonX.pressed(PneumaticSwitch);
+      	Controller1.ButtonA.pressed(PneumaticSwitchBack);
+      	vex::task Battery(BatteryPercent);
+      	instance = 3;
+      	wait(20, msec); // Sleep the task for a short amount of time to
+        // prevent wasted resources.
+  	}
 }
 
 int main() 
 {
-  // Set up callbacks for autonomous and driver control periods.
-  Competition.autonomous(autonomous);
-  Competition.drivercontrol(usercontrol);
-  // Run the pre-autonomous function.
-  pre_auton();
+	// Set up callbacks for autonomous and driver control periods.
+  	Competition.autonomous(autonomous);
+  	Competition.drivercontrol(usercontrol);
+  	// Run the pre-autonomous function.
+  	pre_auton();
 
-  // Prevent main from exiting with an infinite loop.
-  while (true) 
-  {
-    wait(100, msec);
-  }
+  	// Prevent main from exiting with an infinite loop.
+  	while(true) 
+  	{
+		wait(100, msec);
+  	}
 }

@@ -1,11 +1,3 @@
-/*----------------------------------------------------------------------------*/
-/*                                                                            */
-/*    Module:       main.cpp                                                  */
-/*    Author:       Diego Casillas,Carter Blair,Michelle Chen                 */
-/*    Created:      Tue Dec 14 2021                                           */
-/*    Description:  V5 project                                                */
-/*                                                                            */
-/*----------------------------------------------------------------------------*/
 /*-------------------------------------------------------------------------------------*/
 /*Refrences for Carter                                                                 */
 /*https://api.vexcode.cloud/v5/                                                        */
@@ -14,7 +6,7 @@
 /*                                                                                     */
 /*                                                                                     */
 /*-------------------------------------------------------------------------------------*/
-// ---- START VEXCODE CONFIGURED DEVICES ----
+
 // Robot Configuration:
 // [Name]               [Type]        [Port(s)]
 // Controller1          controller                    
@@ -24,10 +16,13 @@
 // RedLED               digital_out   H               
 // YellowLED            digital_out   G               
 // GreenLED             digital_out   F               
-// ---- END VEXCODE CONFIGURED DEVICES ----
+
+
   #include "vex.h"
   using namespace vex;
-// Global variables
+
+
+  // Global variables
   int pneumaticStatus = 0;
   int pneumaticStatusBack = 0;
   int powerStatus = 0;
@@ -36,17 +31,22 @@
   bool FinnishTF = true;
   int instance = 0;
 
-// A global instance of competition
+  // A global instance of competition
   competition Competition;
-void pre_auton(void) {
-  // Initializing Robot Configuration. DO NOT REMOVE!
-  vexcodeInit();
-  // Pre_auton start
-  instance = 1;
+
+  void pre_auton(void) 
+  {
+    // Initializing Robot Configuration. DO NOT REMOVE!
+    vexcodeInit();
+    // Pre_auton start
+    instance = 1;
   }
-// Battery Percent LED Code
-  int BatteryPercent(){
-    while(true){
+
+  // Battery Percent LED Code
+  int BatteryPercent()
+  {
+    while(true)
+    {
       int currentPercent = Brain.Battery.capacity();
         if (currentPercent > 51) 
         {
@@ -70,20 +70,25 @@ void pre_auton(void) {
     }
     return 1;
   }
-// Autonomous Finnish
-  int AutonFinnish(){
-    while (FinnishTF){
-      Drivetrain.driveFor(reverse,36, inches);
-      Drivetrain.turnFor(left, 90, degrees);  
-      Drivetrain.driveFor(forward, 14, inches); 
-      Drivetrain.turnFor(left, 90, degrees); 
-      Drivetrain.driveFor(forward, 10, inches); 
-      Drivetrain.turnFor(left , 90, degrees); 
-      vex::task::sleep(25);
-    }
-    return 1;
+
+  // Autonomous Finnish
+int AutonFinnish()
+{
+  while (FinnishTF)
+  {
+    Drivetrain.driveFor(reverse,36, inches);
+    Drivetrain.turnFor(left, 90, degrees);  
+    Drivetrain.driveFor(forward, 14, inches); 
+    Drivetrain.turnFor(left, 90, degrees); 
+    Drivetrain.driveFor(forward, 10, inches); 
+    Drivetrain.turnFor(left , 90, degrees); 
+    vex::task::sleep(25);
   }
-void autonomous(void) {
+  return 1;
+}
+
+void autonomous(void) 
+{
   vex::task Battery(BatteryPercent);
   Drivetrain.driveFor(forward, 36, inches); 
   Drivetrain.turnFor(right, 90, degrees); 
@@ -93,25 +98,27 @@ void autonomous(void) {
   Pneumatic.set(true); 
   vex::task AutonFinnishTF(AutonFinnish);
   instance = 2;
-    }
-// Start of usercontrol code
-  // Start of CustumController code
-    int CustumController(){
-    // MAX (X,Y) = (479,239)
-    Brain.Battery.capacity();
-    Controller1.Screen.clearLine(1);
-    Controller1.Screen.setCursor(1, 1);
-    Controller1.Screen.print("Vex Tipping Point");
-    Controller1.Screen.setCursor(1, 15); 
-    Controller1.Screen.print(Brain.Battery.capacity());
-    Controller1.Screen.print("%");
-    Controller1.Screen.clearLine(2);
-    Controller1.Screen.setCursor(2, 1); 
-    Controller1.Screen.print("nnn");
-    Controller1.Screen.clearLine(1); 
+}
 
-      return 1;
-    }
+  // Start of usercontrol code
+  // Start of CustumController code
+int CustumController()
+{
+  // MAX (X,Y) = (479,239)
+  Brain.Battery.capacity();
+  Controller1.Screen.clearLine(1);
+  Controller1.Screen.setCursor(1, 1);
+  Controller1.Screen.print("Vex Tipping Point");
+  Controller1.Screen.setCursor(1, 15); 
+  Controller1.Screen.print(Brain.Battery.capacity());
+  Controller1.Screen.print("%");
+  Controller1.Screen.clearLine(2);
+  Controller1.Screen.setCursor(2, 1); 
+  Controller1.Screen.print("nnn");
+  Controller1.Screen.clearLine(1); 
+  return 1;
+}
+
     // Functions
     
     void PneumaticSwitch()
@@ -132,6 +139,7 @@ void autonomous(void) {
           }
         }
       }
+
     void PneumaticSwitchBack()
       {
         switch(pneumaticStatusBack)
@@ -150,29 +158,34 @@ void autonomous(void) {
           }
         }
       }
+
     // End of usercontrol code
 
-void usercontrol(void) {
+void usercontrol(void) 
+{
     // User control code here, inside the loop
-    while (true) {
+    while (true) 
+    {
       Controller1.ButtonX.pressed(PneumaticSwitch);
       Controller1.ButtonA.pressed(PneumaticSwitchBack);
       vex::task Battery(BatteryPercent);
       instance = 3;
       wait(20, msec); // Sleep the task for a short amount of time to
                       // prevent wasted resources.
-    }
   }
+}
 
-int main() {
-    // Set up callbacks for autonomous and driver control periods.
-    Competition.autonomous(autonomous);
-    Competition.drivercontrol(usercontrol);
-    // Run the pre-autonomous function.
-    pre_auton();
+int main() 
+{
+  // Set up callbacks for autonomous and driver control periods.
+  Competition.autonomous(autonomous);
+  Competition.drivercontrol(usercontrol);
+  // Run the pre-autonomous function.
+  pre_auton();
 
-    // Prevent main from exiting with an infinite loop.
-    while (true) {
-      wait(100, msec);
-    }
+  // Prevent main from exiting with an infinite loop.
+  while (true) 
+  {
+    wait(100, msec);
   }
+}
